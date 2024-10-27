@@ -6,21 +6,26 @@ use App\Models\Database;
 
 class User extends Database
 {
-    public static function save(array $data)
+    public static function authentication(array $data)
     {
         $pdo = self::getConnection();
 
         $stmt = $pdo->prepare("
-            INSERT INTO users (name, email, password)
-            VALUES (?, ?, ?)
+            SELECT * FROM users
+            WHERE cpf = ? and password = ?
         ");
 
-        $stmt->execute([
-            $data['name'],
-            $data["email"],
-            $data['password']
-        ]);
+        $stmt->execute([$data['cpf'], $data['password']]);
 
-        return $pdo->lastInsertId() > 0 ? true : false;
+        if ($stmt->rowCount() < 1) {
+            return false;
+        }
+
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return [
+            'id' => $user['id'],
+            'cpf' => $user['cpf'],
+        ];
     }
 }

@@ -7,30 +7,25 @@ use App\Models\User;
 
 class UserService
 {
-    public static function create(array $data)
+    public static function auth(array $data)
     {
         try {
             $fields = Validator::validate([
-                'name'=> $data['name'] ?? '',
-                'email'=> $data['email'] ?? '',
+                'cpf'=> $data['cpf'] ?? '',
                 'password'=> $data['password'] ?? ''
             ]);
 
-            $fields['password'] = password_hash($fields['password'], PASSWORD_DEFAULT);
-
-            $user = User::save($fields);
+            $user = User::authentication($fields);
 
             if (!$user) {
-                return ['error' => 'We couldn\'t create your account.'];
+                return ['error' => 'We couldn\'t authenticate you.'];
             }
 
-            return "User created successfully!";
-
+            return $user;
         } 
         catch (\PDOException $e) {
-            // "could not find driver"
 
-            if ($e->getMessage() === "could not find driver") {
+            if ($e->getCode() === 1049) {
                 return ['error' => 'We couldn\'t connect to the database.'];
             }
 

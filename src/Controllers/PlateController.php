@@ -4,31 +4,28 @@ namespace App\Controllers;
 
 use App\Http\Request;
 use App\Http\Response;
-use App\Services\UserService;
+use App\Services\PlateService;
 
-class UserController
+class PlateController
 {
-
-    public function login(Request $request, Response $response)
+    public function store(Request $request, Response $response)
     {
         $body = $request::body();
 
-        $userService = UserService::auth($body);
+        $plateService = PlateService::create($body);
 
-        if (isset($userService['error'])) {
+        if (isset($plateService['error'])) {
             return $response::json([
                 'error' => true,
                 'success' => false,
-                'message' => $userService['error']
+                'message' => $plateService['error']
             ], 400);
         }
 
         $response::json([
             'error' => false,
             'sucess' => true,
-            'jwt' => $userService
-        ], 200);
-        return;
+            'data' => $plateService
+        ], 201);
     }
-
 }
