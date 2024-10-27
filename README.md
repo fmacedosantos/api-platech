@@ -7,7 +7,7 @@ No Linux, no diretório de criação de projetos, rode:
 sudo a2enmod rewrite
 ```
 
-No Windows, pegue o httpd.conf.txt, copie e cole em xampp/apache/conf (não esqueça de tirar o .txt)
+No Windows, pegue o httpd.conf, copie e cole em xampp/apache/conf (não esqueça de tirar excluir o httpd.conf original)
 - Instale o PHP Composer
 - Rode no terminal do projeto:
 ```bash
