@@ -55,4 +55,30 @@ class PlateService
             return ['error' => $e->getMessage()];
         }
     }
+
+    public static function fetch()
+    {
+        try {
+            $plates = Plate::fetch();
+
+            if (empty($plates)) {
+                return ['error' => 'No plates found.'];
+            }
+
+            return $plates;
+
+        } 
+        catch (\PDOException $e) {
+
+            if ($e->getCode() === 1049) {
+                return ['error' => 'We couldn\'t connect to the database.'];
+            }
+
+            return ['error' => $e->getMessage()];
+        }
+        catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
 }

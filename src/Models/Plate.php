@@ -29,4 +29,14 @@ class Plate extends Database
 
         return $pdo->lastInsertId() > 0 ? true : false;
     }
+
+    public static function fetch()
+    {
+        $pdo = self::getConnection();
+
+        $stmt = $pdo->prepare('SELECT * FROM plates');
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
