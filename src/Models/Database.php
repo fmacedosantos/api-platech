@@ -3,9 +3,9 @@
 namespace App\Models;
 
 define("DB_NAME", "platech");
-define("HOST", "127.0.0.1:3307");
-define("USERNAME", "felipe");
-define("PASSWORD", "123456");
+define("HOST", "localhost");
+define("USERNAME", "root");
+define("PASSWORD", "");
 
 class Database
 {
