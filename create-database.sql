@@ -18,12 +18,12 @@ create table if not exists users (
     password VARCHAR(255) NOT NULL
 );
 
-create table if not exists plates (
-  id bigint(20) UNSIGNED NOT NULL,
-  plate varchar(7) NOT NULL,
-  applicant text NOT NULL,
-  type text NOT NULL,
-  value decimal(8,2) NOT NULL,
-  paymentMethod varchar(25) NOT NULL,
-  date date NOT NULL
-)
+create table if not exists clients (
+    id serial primary key,
+    applicant text not null,
+    company text not null,
+    phone varchar(15) not null unique,
+    registerType varchar(25) not null,
+    priceCar decimal(8, 2) not null,
+    priceMotorcycle decimal(8, 2) not null
+) 
