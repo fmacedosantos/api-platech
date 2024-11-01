@@ -17,3 +17,13 @@ create table if not exists users (
     cpf VARCHAR(14) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL
 );
+
+create table if not exists plates (
+  id bigint(20) UNSIGNED NOT NULL,
+  plate varchar(7) NOT NULL,
+  applicant text NOT NULL,
+  type text NOT NULL,
+  value decimal(8,2) NOT NULL,
+  paymentMethod varchar(25) NOT NULL,
+  date date NOT NULL
+)
