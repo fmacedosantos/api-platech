@@ -17,3 +17,13 @@ create table if not exists users (
     cpf VARCHAR(14) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL
 );
+
+create table if not exists clients (
+    id serial primary key,
+    applicant text not null,
+    company text not null,
+    phone varchar(15) not null unique,
+    registerType varchar(25) not null,
+    priceCar decimal(8, 2) not null,
+    priceMotorcycle decimal(8, 2) not null
+) 
