@@ -8,7 +8,6 @@ use App\Services\UserService;
 
 class UserController
 {
-
     public function login(Request $request, Response $response)
     {
         $body = $request::body();
@@ -25,10 +24,8 @@ class UserController
 
         $response::json([
             'error' => false,
-            'sucess' => true,
-            'jwt' => $userService
+            'success' => true,
+            'token' => $userService['token']
         ], 200);
-        return;
     }
-
 }

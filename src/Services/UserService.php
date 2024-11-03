@@ -18,17 +18,18 @@ class UserService
             $user = User::authentication($fields);
 
             if (!$user) {
-                return ['error' => 'We couldn\'t authenticate you.'];
+                return ['error' => 'CPF ou senha incorreto'];
             }
 
-            return $user;
+            $token = md5($user['id'] . time());
+            $_SESSION['user_token'] = $token;
+
+            return ['token' => $token, 'user' => $user];
         } 
         catch (\PDOException $e) {
-
             if ($e->getCode() === 1049) {
-                return ['error' => 'We couldn\'t connect to the database.'];
+                return ['error' => 'Não foi possível conectar ao banco de dados.'];
             }
-
             return ['error' => $e->getMessage()];
         }
         catch (\Exception $e) {
