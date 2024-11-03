@@ -6,7 +6,7 @@ use App\Http\Request;
 use App\Http\Response;
 use App\Models\Database;
 
-class HomeController
+class HomeController extends Database
 {
     public function create(Request $request, Response $response)
     {
