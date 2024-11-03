@@ -12,10 +12,10 @@ class User extends Database
 
         $stmt = $pdo->prepare("
             SELECT * FROM users
-            WHERE cpf = ? and password = ?
+            WHERE cpf = ?
         ");
 
-        $stmt->execute([$data['cpf'], $data['password']]);
+        $stmt->execute([$data['cpf']]);
 
         if ($stmt->rowCount() < 1) {
             return false;
@@ -23,9 +23,32 @@ class User extends Database
 
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
+        if (!password_verify($data['password'], $user['password'])) {
+            return false;
+        }
+
         return [
             'id' => $user['id'],
             'cpf' => $user['cpf'],
         ];
+    }
+
+    public static function save(array $data)
+    {
+        $pdo = self::getConnection();
+
+        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        $stmt = $pdo->prepare("
+            INSERT INTO users (cpf, password)
+            VALUES (?, ?)
+        ");
+
+        $stmt->execute([
+            $data['cpf'],
+            $hashedPassword
+        ]);
+
+        return $pdo->lastInsertId() > 0 ? true : false;
     }
 }

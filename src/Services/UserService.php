@@ -24,11 +24,36 @@ class UserService
             return $user;
         } 
         catch (\PDOException $e) {
-
             if ($e->getCode() === 1049) {
                 return ['error' => 'We couldn\'t connect to the database.'];
             }
+            return ['error' => $e->getMessage()];
+        }
+        catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
 
+    public static function create(array $data)
+    {
+        try {
+            $fields = Validator::validate([
+                'cpf'=> $data['cpf'] ?? '',
+                'password'=> $data['password'] ?? ''
+            ]);
+
+            $isSaved = User::save($fields);
+
+            if (!$isSaved) {
+                return ['error' => 'Failed to register user.'];
+            }
+
+            return ['userId' => $isSaved];
+        }
+        catch (\PDOException $e) {
+            if ($e->getCode() === 1049) {
+                return ['error' => 'We couldn\'t connect to the database.'];
+            }
             return ['error' => $e->getMessage()];
         }
         catch (\Exception $e) {
