@@ -42,13 +42,13 @@ class UserService
                 'password'=> $data['password'] ?? ''
             ]);
 
-            $isSaved = User::save($fields);
+            $user = User::save($fields);
 
-            if (!$isSaved) {
+            if (!$user) {
                 return ['error' => 'Failed to register user.'];
             }
 
-            return ['userId' => $isSaved];
+            return "User registered successfully!";
         }
         catch (\PDOException $e) {
             if ($e->getCode() === 1049) {
