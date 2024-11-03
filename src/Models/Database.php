@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-define("DB_NAME", "platech");
-define("HOST", "localhost:3307");
-define("USERNAME", "root");
-define("PASSWORD", "123456");
-
 class Database
 {
-
     public static function getConnection()
     {
-        $pdo = new \PDO("mysql:dbname=".DB_NAME."; host=".HOST, USERNAME, PASSWORD);
+        $dbName = getenv('DB_NAME');
+        $host = getenv('DB_HOST');
+        $port = getenv('DB_PORT');
+        $username = getenv('DB_USERNAME');
+        $password = getenv('DB_PASSWORD');
+        
+        // Conectar ao banco de dados
+        $pdo = new \PDO("mysql:dbname=$dbName;host=$host;port=$port", $username, $password);
 
         return $pdo;
     }
