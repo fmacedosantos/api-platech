@@ -4,11 +4,14 @@ namespace App\Core;
 
 use App\Http\Request;
 use App\Http\Response;
+use App\Http\CorsMiddleware;
 
 class Core
 {
     public static function dispatch(array $routes)
     {
+        CorsMiddleware::handle();
+        
         $url = '/';
 
         isset($_GET['url']) && $url .= $_GET['url'];
