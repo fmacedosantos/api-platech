@@ -11,7 +11,7 @@ class PlateService
     {
         try {
             $fields = Validator::validate([
-                'plate'=> $data['plate'] ?? '',
+                'plate'=> strtoupper($data['plate'] ?? ''),
                 'applicant'=> $data['applicant'] ?? '',
                 'type'=> $data['type'] ?? '',
                 'value'=> $data['value'] ?? '',
