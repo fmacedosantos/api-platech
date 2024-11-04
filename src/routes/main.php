@@ -2,7 +2,6 @@
 
 use App\Http\Route;
 
-Route::get('/createTables', 'HomeController@create');
 Route::post('/users/login', 'UserController@login');
 Route::post('/users/create', 'UserController@store');
 Route::post('/plates/create', 'PlateController@store');
